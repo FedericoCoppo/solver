@@ -72,7 +72,7 @@ public:
     void SetTimePackage(int index, float pack) {  prodList[index]->timePackage = pack; }
     void SetPctReturn(int index, float ret) { prodList[index]->pctReturn = ret;}
     void SetNominalPrice(int index, float price) { prodList[index]->nominalPrice = price;}
-    bool SetPrice(int index, float v) {  prodList[index]->nominalPrice = v;}
+    void SetPrice(int index, float v) {  prodList[index]->nominalPrice = v;}
     void SetMeanPrice(int index, float price) { prodList[index]->meanPrice = price;}
     void SetLastPrice(int index, float price) { prodList[index]->lastPrice = price;}
     void SetLastValue(int index, double v) {  prodList[index]->lastPrice = v; }
