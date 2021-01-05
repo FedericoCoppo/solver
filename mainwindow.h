@@ -35,7 +35,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    bool txRunning = false;
     myThreadTx txThread;
     ProductDisplayer * pt_disp;
 
@@ -43,7 +42,7 @@ private slots:
     void on_actionLOAD_triggered();
     void on_actionExit_triggered();
     void on_pushButtonDisplay_clicked();
-
+    void on_pushButtonAdd_clicked();
     void openRecentFile(QAction*);
 
 

@@ -25,7 +25,9 @@ SOURCES += \
     Product.cpp \
     ProductDisplayer.cpp \
     QActionWrapper.cpp \
+    TextFilter.cpp \
     U64SpinBox.cpp \
+    addproduct.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -37,7 +39,9 @@ HEADERS += \
     ProductDisplayer.h \
     QActionWrapper.h \
     SeriesProperties.h \
+    TextFilter.h \
     U64SpinBox.h \
+    addproduct.h \
     mainwindow.h
 
 QT += charts
@@ -45,6 +49,7 @@ QT += charts
 INCLUDEPATH += $$PWD/lib
 
 FORMS += \
+    addproduct.ui \
     mainwindow.ui
 
 RESOURCES += \
@@ -57,3 +62,7 @@ win32:RC_ICONS += Solver.ico
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    AddProduct.qml \
+    AddProductForm.ui.qml

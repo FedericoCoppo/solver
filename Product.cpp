@@ -31,9 +31,28 @@ void Product::Clear()
     // remove calibration
     int iNum = prodList.count();
 
-    for (int i=0; i < iNum; i++)
+    for (int i = 0; i < iNum; i++)
     {
         delete (prodList.takeAt(0));
+    }
+
+    prodCodeStrList.clear();
+    prodCompanyStrList.clear();
+}
+
+void Product::RemoveProdCodeStrList(QString s)
+{
+    if (prodCodeStrList.indexOf(s) >= 0)
+    {
+        prodCodeStrList.removeAt(prodCodeStrList.indexOf(s));
+    }
+}
+
+void Product::RemoveProdCompanyStrList(QString s)
+{
+    if (prodCompanyStrList.indexOf(s) >= 0)
+    {
+        prodCompanyStrList.removeAt(prodCompanyStrList.indexOf(s));
     }
 }
 
@@ -46,11 +65,15 @@ bool Product::ProductParseFromExcel(QString path)
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << file.errorString();
-        return 1;
+        return false;
     }
 
     QList<QByteArray> wordList;
     QByteArray line = file.readLine(); // remove header
+
+    ClearProdCodeStrList();
+    ClearProdCompanyStrList();
+
     while (!file.atEnd())
     {
         line = file.readLine();
@@ -67,6 +90,9 @@ bool Product::ProductParseFromExcel(QString path)
 
         wordList.clear();
         prodList.append(tmp_pt);
+
+        AppendProdCodeStrList(tmp_pt->code);
+        AppendProdCompanyStrList(tmp_pt->company + " code: " + tmp_pt->code);
     }
 
     res = true;

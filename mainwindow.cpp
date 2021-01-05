@@ -12,6 +12,9 @@
 #include <fstream>
 #include "QActionWrapper.h"
 #include "Product.h"
+#include "addproduct.h"
+
+static bool taskIsRunning = true;
 
 void myThreadTx::run()
 {
@@ -108,8 +111,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     pt_disp = new ProductDisplayer(ui);
 
-    // tx thread
-    txRunning = true;
+    taskIsRunning = true;
     txThread.start();
 
 }
@@ -128,15 +130,29 @@ void MainWindow::on_actionLOAD_triggered()
 
         // READ excel
         g_prod.Clear();
+        pt_disp->ClearParamDisplayElement();
+        if (pt_disp->isDisplayOn())
+        {
+           ui->pushButtonDisplay->toggle();
+           pt_disp->SetDisplayOn(false);
+        }
 
         if (g_prod.ProductParseFromExcel(fileNames[0]))
         {
             // enable calibration button
             ui->pushButtonDisplay->setEnabled(true);
+            ui->pushButtonDisplay->setCheckable(true);
+            ui->pushButtonAdd->setEnabled(true);
+            pt_disp->CloseFilters();
+            pt_disp->OpenFilters();
+            ui->lineEditTrace->setText("FILE CORRETTAMENTE IMPORTATO");
         }
         else
         {
             ui->pushButtonDisplay->setEnabled(false);
+            ui->pushButtonAdd->setEnabled(false);
+            ui->lineEditTrace->setText("FILE NON TROVATO O FORMATO INCORRETTO");
+            pt_disp->ClearParamDisplayElement();
         }
 
         // update history
@@ -171,39 +187,77 @@ void MainWindow::openRecentFile(QAction* file)
 {
     // remove previous struct
      g_prod.Clear();
+     pt_disp->ClearParamDisplayElement();
+
+     if (pt_disp->isDisplayOn())
+     {
+        ui->pushButtonDisplay->toggle();
+        pt_disp->SetDisplayOn(false);
+     }
 
      if (g_prod.ProductParseFromExcel(file->text()))
      {
          // enable calibration button
          ui->pushButtonDisplay->setEnabled(true);
+         ui->pushButtonDisplay->setCheckable(true);
+         ui->pushButtonAdd->setEnabled(true);
+         pt_disp->CloseFilters();
+         pt_disp->OpenFilters();
+         ui->lineEditTrace->setText("FILE CORRETTAMENTE IMPORTATO");
      }
      else
      {
          ui->pushButtonDisplay->setEnabled(false);
+         ui->pushButtonAdd->setEnabled(false);
+         ui->lineEditTrace->setText("FILE NON TROVATO O FORMATO INCORRETTO");
      }
 }
 
 void MainWindow::on_actionExit_triggered()
 {
+    /* DA SPOSTARE NELLA PARTE CHE RICHIAMA IL MODELLO
     QString program("multilinearRegProdotti.exe");
     QStringList parameters;
 
     QProcess::startDetached(program, parameters);
-    // this->close();
-
-
+    */
+    this->close();
 }
 
 void MainWindow:: on_pushButtonDisplay_clicked()
 {
-    qDebug() << "clicked";
     pt_disp->PushButtonDisplayClicked();
+}
+
+void MainWindow:: on_pushButtonAdd_clicked()
+{
+    // Remove all displayer ?
+
+    addProduct* d = new addProduct(pt_disp, this);
+
+    d->setWindowTitle("Aggiungi i dati di un nuovo prodotto");
+
+    if (d->exec() == QDialog::Accepted)
+    {
+
+
+    }
+    else
+    {
+
+    }
+
+    delete d;
+
+    // Update the filter
+    pt_disp->CloseFilters();
+    pt_disp->OpenFilters();
 }
 
 MainWindow::~MainWindow()
 {
     txThread.terminate();
-    txRunning = false;
+    taskIsRunning = false;
 
     if (pt_disp)
     {
@@ -218,11 +272,33 @@ void MainWindow::txRun()
 {
     auto tStep = std::chrono::milliseconds(5);
     std::chrono::high_resolution_clock::time_point timePoint = std::chrono::high_resolution_clock::now() + tStep;
+    qDebug() << "task entrato";
 
-    while(txRunning)
+    while(taskIsRunning)
     {
         // Fill the thread
 
+        /*
+        if (updateFilters)
+        {
+            updateFilters = false;
+
+            // Update the filter
+            pt_disp->CloseFilters();
+            pt_disp->OpenFilters();
+
+        }
+
+        if (pt_disp)
+        {
+            if (pt_disp->CheckFilterUpdateNeeded())
+            {
+                // Update the filter
+                pt_disp->CloseFilters();
+                pt_disp->OpenFilters();
+            }
+        }
+        */
         std::this_thread::sleep_until(timePoint);
         timePoint += tStep;
     }

@@ -2,4 +2,14 @@
     <qresource prefix="/icon">
         <file>images/play.png</file>
     </qresource>
+	
+	 <qresource prefix="/icon">
+        <file>images/stop.png</file>
+    </qresource>
+	
+	<qresource prefix="/icon">
+        <file>images/add.png</file>
+    </qresource>
 </RCC>
+
+

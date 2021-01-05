@@ -47,8 +47,8 @@
           </property>
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>10</y>
+            <x>30</x>
+            <y>30</y>
             <width>35</width>
             <height>35</height>
            </rect>
@@ -89,10 +89,10 @@
           </property>
           <property name="geometry">
            <rect>
-            <x>0</x>
-            <y>50</y>
-            <width>1271</width>
-            <height>891</height>
+            <x>-50</x>
+            <y>90</y>
+            <width>1261</width>
+            <height>841</height>
            </rect>
           </property>
           <property name="widgetResizable">
@@ -103,11 +103,147 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1269</width>
-             <height>889</height>
+             <width>1259</width>
+             <height>839</height>
             </rect>
            </property>
           </widget>
+         </widget>
+         <widget class="QScrollArea" name="scrollAreaFilter">
+          <property name="geometry">
+           <rect>
+            <x>220</x>
+            <y>20</y>
+            <width>141</width>
+            <height>61</height>
+           </rect>
+          </property>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents_2">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>139</width>
+             <height>59</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit">
+          <property name="geometry">
+           <rect>
+            <x>220</x>
+            <y>0</y>
+            <width>141</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>RICERCA PER AZIENDA</string>
+          </property>
+         </widget>
+         <widget class="QScrollArea" name="scrollArea_2">
+          <property name="geometry">
+           <rect>
+            <x>370</x>
+            <y>20</y>
+            <width>121</width>
+            <height>61</height>
+           </rect>
+          </property>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents_3">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>119</width>
+             <height>59</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_2">
+          <property name="geometry">
+           <rect>
+            <x>370</x>
+            <y>0</y>
+            <width>121</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>RICERCA PER CODICE </string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButtonAdd">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>80</x>
+            <y>30</y>
+            <width>35</width>
+            <height>35</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>35</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>35</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Start Session</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resource.qrc">
+            <normaloff>:/icon/images/add.png</normaloff>:/icon/images/add.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>35</width>
+            <height>27</height>
+           </size>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEditTrace">
+          <property name="geometry">
+           <rect>
+            <x>500</x>
+            <y>60</y>
+            <width>401</width>
+            <height>20</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label">
+          <property name="geometry">
+           <rect>
+            <x>510</x>
+            <y>40</y>
+            <width>47</width>
+            <height>13</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Info</string>
+          </property>
          </widget>
         </widget>
         <widget class="QWidget" name="tab_4">
@@ -136,7 +272,7 @@
     </property>
     <widget class="QMenu" name="menuRecent_Files">
      <property name="title">
-      <string>Recent Files ...</string>
+      <string>File recenti ...</string>
      </property>
     </widget>
     <addaction name="separator"/>
@@ -156,12 +292,12 @@
   </widget>
   <action name="actionLOAD">
    <property name="text">
-    <string>LOAD .A2L</string>
+    <string>Carica file prodotti (csv)</string>
    </property>
   </action>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string>Esci</string>
    </property>
   </action>
   <action name="actionConnect">
