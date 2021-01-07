@@ -22,6 +22,7 @@
 
 #include "TextFilter.h"
 
+
 class ProductDisplayer :
         public QWidget
 {
@@ -42,6 +43,7 @@ public:
         QAbstractSpinBox * price_pt;
         Product::prodContent * prodContentPt;
         QPushButton * button_pt;
+        QPushButton * deletebutton_pt;
         QString oldCode;
 
     } ProdDisplayer;
@@ -69,6 +71,7 @@ public:
 private:
     Ui::MainWindow * p_ui;
     QButtonGroup btnGroup;
+    QButtonGroup btnGroupDelete;
     bool isCalModifyEnabled;
     QVBoxLayout * items_layout;
     QList < QLabel * > titleLabelList;
@@ -103,6 +106,7 @@ private slots:
     void measurementSelectedCode(QString str);
     void vScrollValueChanged(int);
     void handleButton(int idx);
+    void handleButtonDelete(int idx);
 };
 
 #endif // PRODUCTDISPLAYER_H

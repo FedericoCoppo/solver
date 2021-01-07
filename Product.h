@@ -63,7 +63,6 @@ public:
     bool ProdCompanyStrListContains(QString s) { return prodCompanyStrList.contains(s); }
 
     // Setter
-
     void SetCode(int index, QString code) {prodList[index]->code = code;}
     void SetCompany(int index, QString company) { prodList[index]->company = company;}
     void SetWeight(int index, float w) { prodList[index]->weight_g = w;}

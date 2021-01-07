@@ -10,6 +10,11 @@
 	<qresource prefix="/icon">
         <file>images/add.png</file>
     </qresource>
+	
+	<qresource prefix="/icon">
+        <file>images/cancel.png</file>
+    </qresource>
+	
 </RCC>
 
 

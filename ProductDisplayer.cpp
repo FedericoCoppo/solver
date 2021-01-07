@@ -116,6 +116,8 @@ void ProductDisplayer::ClearParamDisplayElement()
         delete tmp->pctReturn_pt;
         delete tmp->price_pt;
         delete tmp->button_pt;
+        delete tmp->deletebutton_pt;
+
         delete (tmp);
     }
 
@@ -133,6 +135,7 @@ void ProductDisplayer::ClearParamDisplayElement()
      if (buttonConnected)
      {
          disconnect(&btnGroup, SIGNAL (buttonClicked(int)), this, SLOT (handleButton(int)));
+         disconnect(&btnGroupDelete, SIGNAL (buttonClicked(int)), this, SLOT (handleButtonDelete(int)));
          buttonConnected = false;
      }
 }
@@ -196,56 +199,62 @@ void ProductDisplayer::displayTitle()
         titleLabelList.append(title_label);
 
         title_label  = new QLabel("CODICE");
-        title_label->setMinimumWidth (120);
-        title_label->setMaximumWidth (130);
+        title_label->setMinimumWidth (110);
+        title_label->setMaximumWidth (120);
         hbox_layout->addWidget (title_label);
         titleLabelList.append(title_label);
 
         title_label  = new QLabel("DITTA");
-        title_label->setMinimumWidth (120);
-        title_label->setMaximumWidth (130);
+        title_label->setMinimumWidth (110);
+        title_label->setMaximumWidth (120);
         hbox_layout->addWidget (title_label);
         titleLabelList.append(title_label);
 
         title_label  = new QLabel("PESO [g]");
-        title_label->setMinimumWidth (120);
-        title_label->setMaximumWidth (130);
+        title_label->setMinimumWidth (110);
+        title_label->setMaximumWidth (120);
         hbox_layout->addWidget (title_label);
         titleLabelList.append(title_label);
 
         title_label  = new QLabel("SUPERFICE [mm^2]");
-        title_label->setMinimumWidth (120);
-        title_label->setMaximumWidth (130);
+        title_label->setMinimumWidth (110);
+        title_label->setMaximumWidth (120);
         hbox_layout->addWidget (title_label);
         titleLabelList.append(title_label);
 
         title_label  = new QLabel("PREPARAZIONE [min]");
-        title_label->setMinimumWidth (120);
-        title_label->setMaximumWidth (130);
+        title_label->setMinimumWidth (110);
+        title_label->setMaximumWidth (120);
         hbox_layout->addWidget (title_label);
         titleLabelList.append(title_label);
 
         title_label  = new QLabel("IMBALLAGGIO [min]");
-        title_label->setMinimumWidth (120);
-        title_label->setMaximumWidth (130);
+        title_label->setMinimumWidth (110);
+        title_label->setMaximumWidth (120);
         hbox_layout->addWidget (title_label);
         titleLabelList.append(title_label);
 
         title_label  = new QLabel("% RICHIAMI");
-        title_label->setMinimumWidth (120);
-        title_label->setMaximumWidth (130);
+        title_label->setMinimumWidth (110);
+        title_label->setMaximumWidth (120);
         hbox_layout->addWidget (title_label);
         titleLabelList.append(title_label);
 
         title_label  = new QLabel("PREZZO");
-        title_label->setMinimumWidth (120);
-        title_label->setMaximumWidth (130);
+        title_label->setMinimumWidth (110);
+        title_label->setMaximumWidth (120);
         hbox_layout->addWidget (title_label);
         titleLabelList.append(title_label);
 
         title_label  = new QLabel("MODIFICA");
-        title_label->setMinimumWidth (120);
-        title_label->setMaximumWidth (130);
+        title_label->setMinimumWidth (110);
+        title_label->setMaximumWidth (120);
+        hbox_layout->addWidget (title_label);
+        titleLabelList.append(title_label);
+
+        title_label  = new QLabel("CANCELLA");
+        title_label->setMinimumWidth (110);
+        title_label->setMaximumWidth (120);
         hbox_layout->addWidget (title_label);
         titleLabelList.append(title_label);
 
@@ -262,6 +271,7 @@ void ProductDisplayer::creatMeas(int index, int incrementalElement)
     items_label->updateGeometry ();
     delete items_label;
     QPushButton *changeBtn;
+    QPushButton *deleteBtn;
 
     ProdDisplayer * displayTmp = new ProdDisplayer();
 
@@ -383,13 +393,34 @@ void ProductDisplayer::creatMeas(int index, int incrementalElement)
     changeBtn->setEnabled(true);
     hbox_layout->addWidget (changeBtn);
 
+    /* delete button*/
+    deleteBtn = new QPushButton(p_ui->scrollAreaWidgetContents);
+    deleteBtn->setObjectName(QString::fromUtf8("CANC"));
+    deleteBtn->setMinimumSize(35,30);
+    deleteBtn->setMaximumSize(35,30);
+    deleteBtn->setGeometry(QRect(30, 30, 35, 35));
+
+    QIcon icon;
+    icon.addFile(QString::fromUtf8(":/icon/images/cancel.png"), QSize(), QIcon::Normal, QIcon::On);
+    deleteBtn->setIcon(icon);
+    deleteBtn->setIconSize(QSize(35, 27));
+
+    deleteBtn->setEnabled(true);
+    hbox_layout->addWidget (deleteBtn);
+
     // hbox_layout->setAlignment(Qt::AlignTop);
 
     items_layout->addLayout (hbox_layout);
     displayTmp->button_pt = changeBtn;
 
     btnGroup.addButton(changeBtn, incrementalElement);
+
+    displayTmp->deletebutton_pt = deleteBtn;
+    btnGroupDelete.addButton(deleteBtn, incrementalElement);
+
     prodDisplList.append(displayTmp);
+
+
 }
 
 void ProductDisplayer::DisplayProd()
@@ -423,6 +454,7 @@ void ProductDisplayer::DisplayProd()
         if (!buttonConnected)
         {
             connect(&btnGroup, SIGNAL (buttonClicked(int)), this, SLOT (handleButton(int)));
+            connect(&btnGroupDelete, SIGNAL (buttonClicked(int)), this, SLOT (handleButtonDelete(int)));
             buttonConnected = true;
         }
     }
@@ -467,6 +499,7 @@ void ProductDisplayer::measurementSelectedCompany(QString str)
         if (!buttonConnected)
         {
             connect(&btnGroup, SIGNAL (buttonClicked(int)), this, SLOT (handleButton(int)));
+            connect(&btnGroupDelete, SIGNAL (buttonClicked(int)), this, SLOT (handleButtonDelete(int)));
             buttonConnected = true;
         }
     }
@@ -520,6 +553,7 @@ void ProductDisplayer::measurementSelectedCode(QString str)
         if (!buttonConnected)
         {
             connect(&btnGroup, SIGNAL (buttonClicked(int)), this, SLOT (handleButton(int)));
+            connect(&btnGroupDelete, SIGNAL (buttonClicked(int)), this, SLOT (handleButtonDelete(int)));
             buttonConnected = true;
         }
     }
@@ -550,6 +584,12 @@ void ProductDisplayer::vScrollValueChanged(int val)
             }
         }
     }
+}
+
+void ProductDisplayer::handleButtonDelete(int idx)
+{
+
+
 }
 
 void ProductDisplayer::handleButton(int idx)
