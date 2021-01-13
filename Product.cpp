@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QStringList>
 #include <QDebug>
+#include <QMessageBox>
 
 #include "Product.h"
 
@@ -38,6 +39,13 @@ void Product::Clear()
 
     prodCodeStrList.clear();
     prodCompanyStrList.clear();
+}
+
+
+void Product::Delete(int idx)
+{
+   prodContent * p = prodList.takeAt(idx);
+   delete p;
 }
 
 void Product::RemoveProdCodeStrList(QString s)
@@ -79,17 +87,21 @@ bool Product::ProductParseFromExcel(QString path)
         line = file.readLine();
         wordList.append(line.split(';'));
         Product::prodContent * tmp_pt = new Product::prodContent();
-        tmp_pt->code = wordList.takeAt(0);
-        tmp_pt->company = wordList.takeAt(0);
-        tmp_pt->weight_g = wordList.takeAt(0).toFloat();
-        tmp_pt->surface_mm2 = wordList.takeAt(0).toFloat();
-        tmp_pt->timePreparation = wordList.takeAt(0).toUInt();
-        tmp_pt->timePackage = wordList.takeAt(0).toUInt();
-        tmp_pt->pctReturn = wordList.takeAt(0).toUInt();
-        tmp_pt->nominalPrice = wordList.takeAt(0).toFloat();
+
+        if (wordList.size() == 8)
+        {
+            tmp_pt->code = wordList.takeAt(0);
+            tmp_pt->company = wordList.takeAt(0);
+            tmp_pt->weight_g = wordList.takeAt(0).replace(",", ".").toFloat();
+            tmp_pt->surface_mm2 = wordList.takeAt(0).replace(",", ".").toFloat();
+            tmp_pt->timePreparation = wordList.takeAt(0).toUInt();
+            tmp_pt->timePackage = wordList.takeAt(0).toUInt();
+            tmp_pt->pctReturn = wordList.takeAt(0).toUInt();
+            tmp_pt->nominalPrice = wordList.takeAt(0).replace(",", ".").toFloat();
+            prodList.append(tmp_pt);
+        }
 
         wordList.clear();
-        prodList.append(tmp_pt);
 
         AppendProdCodeStrList(tmp_pt->code);
         AppendProdCompanyStrList(tmp_pt->company + " code: " + tmp_pt->code);
@@ -98,6 +110,55 @@ bool Product::ProductParseFromExcel(QString path)
     res = true;
 
     return res;
+}
+
+bool Product::saveCSVFile()
+{
+    QString fname = QFileDialog::getSaveFileName(nullptr, "save ", ".", "csv file prodotti (*.csv)" );
+
+    if (fname.isEmpty())
+    {
+        return false;
+    }
+    else
+    {
+        QFile file(fname);
+        file.putChar('c');
+        if (!file.open(QIODevice::WriteOnly))         // save the empty file
+        {
+            return false;
+        }
+
+        file.close();
+
+        if ( file.open(QIODevice::ReadWrite) )
+        {
+            QByteArray QByteArray;
+            int max =  g_prod.GetProdListCnt();
+            QTextStream stream( &file );
+            stream <<  "CODICE;DITTA;PESO[g];SUPERFICE [mm^2];PREPARAZIONE ALLA VERNICIATURA [min];TEMPO IMBALLAGGIO [min];% RICHIAMI;PREZZO" << Qt::endl;
+
+
+            for (int i = 0; i < max; i++ )
+            {
+                QString line = g_prod.GetCode(i) + ";" + g_prod.GetCompany(i) + ";" + QString::number(g_prod.GetWeight(i)) + ";" + QString::number(g_prod.GetSurface_mm2(i)) +
+                        ";" + QString::number(g_prod.GetTimePreparation(i)) + ";" + QString::number(g_prod.GetTimePackage(i)) + ";"+ QString::number(g_prod.GetPctReturn(i)) + ";" + QString::number(g_prod.GetNominalPrice(i));
+
+                if (i + 1 == max)
+                {
+                    /* avoid '\n' at the endo of the file */
+                }
+                else
+                {
+                    stream << line << Qt::endl;
+                }
+            }
+
+            file.close();
+        }
+    }
+
+    return true;
 }
 
 #endif // CONFIGURATOR_CPP

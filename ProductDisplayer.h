@@ -21,7 +21,7 @@
 #include <QMdiSubWindow>
 
 #include "TextFilter.h"
-
+#include "deleteconfirm.h"
 
 class ProductDisplayer :
         public QWidget
@@ -61,6 +61,7 @@ public:
     void PushButtonDisplayClicked();
     void ClearParamDisplayElement();
     bool isDisplayOn() { return displayOn; }
+    Ui::MainWindow * Get_p_ui() {return p_ui;}
 
     /*
     double getSpinboxValue(int idx);

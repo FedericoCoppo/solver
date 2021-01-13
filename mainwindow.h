@@ -43,9 +43,8 @@ private slots:
     void on_actionExit_triggered();
     void on_pushButtonDisplay_clicked();
     void on_pushButtonAdd_clicked();
+    void on_pushButtonSave_clicked();
     void openRecentFile(QAction*);
-
-
 
 signals:
 

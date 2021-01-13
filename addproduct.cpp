@@ -9,6 +9,7 @@ addProduct::addProduct(ProductDisplayer * pt_disp, QWidget *parent) :
 {
     ui->setupUi(this);
     p_disp = pt_disp;
+    p_disp->Get_p_ui()->lineEditTrace->setText("");
 }
 
 addProduct::~addProduct()
@@ -48,11 +49,9 @@ void addProduct::on_pushButtonSaveAdd_clicked()
                 }
             }
 
-            // Update the filter
-            //p_disp->CloseFilters();
-            //p_disp->OpenFilters();
-
             this->close();
+
+            p_disp->Get_p_ui()->lineEditTrace->setText("NUOVO PRODOTTO codice" + tmp_pt->code + " ( " + tmp_pt->company  + " ) AGGIUNTO");
         }
         else
         {

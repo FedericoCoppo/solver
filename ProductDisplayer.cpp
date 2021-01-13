@@ -172,12 +172,15 @@ void ProductDisplayer::PushButtonDisplayClicked()
             scrollEnabled = true;
             DisplayProd();
             displayOn = true;
+            p_ui->pushButtonSave->setEnabled(true);
+            p_ui->lineEditTrace->setText("DISPLAY ON");
         }
         else
         {
             ClearParamDisplayElement();
             displayOn = false;
             scrollEnabled = false;
+            p_ui->lineEditTrace->setText("DISPLAY OFF");
         }
     }
 }
@@ -588,8 +591,46 @@ void ProductDisplayer::vScrollValueChanged(int val)
 
 void ProductDisplayer::handleButtonDelete(int idx)
 {
+    ProdDisplayer * displayTmp = prodDisplList[idx];
+    QString code = displayTmp->code_pt->text();
+    DeleteConfirm* d = new DeleteConfirm(code);
 
+    d->setWindowTitle("Cancella i dati di un prodotto");
 
+    if (d->exec() == QDialog::Accepted)
+    {
+        // check if not alread present into measurement displayer
+        bool found = false;
+        int max = g_prod.GetProdListCnt();
+        int i;
+        for (i = 0; i < max; i++)
+        {
+            if (g_prod.GetCode(i) ==displayTmp->code_pt->text())
+            {
+                found = true;
+                break;
+            }
+        }
+
+        if (found)
+        {
+            g_prod.Delete(i);
+            ClearParamDisplayElement();
+
+            if (isDisplayOn())
+            {
+               p_ui->lineEditTrace->setText("CANCELLAZIONE PRODOTTO " + code + " ESEGUITA");
+               p_ui->pushButtonDisplay->toggle();
+               SetDisplayOn(false);
+            }
+        }
+    }
+    else
+    {
+       p_ui->lineEditTrace->setText("CANCELLAZIONE ANNULLATA");
+    }
+
+    delete d;
 }
 
 void ProductDisplayer::handleButton(int idx)

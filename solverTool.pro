@@ -28,6 +28,7 @@ SOURCES += \
     TextFilter.cpp \
     U64SpinBox.cpp \
     addproduct.cpp \
+    deleteconfirm.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -42,6 +43,7 @@ HEADERS += \
     TextFilter.h \
     U64SpinBox.h \
     addproduct.h \
+    deleteconfirm.h \
     mainwindow.h
 
 QT += charts
@@ -50,6 +52,7 @@ INCLUDEPATH += $$PWD/lib
 
 FORMS += \
     addproduct.ui \
+    deleteconfirm.ui \
     mainwindow.ui
 
 RESOURCES += \

@@ -28,6 +28,7 @@ public:
     virtual ~Product();
     void Clear();
     bool ProductParseFromExcel(QString path);
+    bool saveCSVFile();
 
     // getter
     bool GetIsProductFilled() { return isProductNotEmpty == true;}
@@ -52,6 +53,7 @@ public:
     void Append(prodContent * pt) { prodList.append(pt); }
     void AppendProdCodeStrList(QString s) { prodCodeStrList << s; }
     void AppendProdCompanyStrList(QString s) { prodCompanyStrList << s; }
+    void Delete(int idx);
 
     void ClearProdCodeStrList() { prodCodeStrList.clear(); }
     void ClearProdCompanyStrList() { prodCompanyStrList.clear(); }

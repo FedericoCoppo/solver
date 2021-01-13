@@ -203,7 +203,7 @@ void MainWindow::openRecentFile(QAction* file)
          ui->pushButtonAdd->setEnabled(true);
          pt_disp->CloseFilters();
          pt_disp->OpenFilters();
-         ui->lineEditTrace->setText("FILE CORRETTAMENTE IMPORTATO");
+         ui->lineEditTrace->setText("FILE " + file->text()  + " CORRETTAMENTE IMPORTATO");
      }
      else
      {
@@ -237,14 +237,11 @@ void MainWindow:: on_pushButtonAdd_clicked()
 
     d->setWindowTitle("Aggiungi i dati di un nuovo prodotto");
 
-    if (d->exec() == QDialog::Accepted)
+    if (d->exec() == QDialog::Rejected)
     {
-
-
     }
     else
     {
-
     }
 
     delete d;
@@ -252,6 +249,19 @@ void MainWindow:: on_pushButtonAdd_clicked()
     // Update the filter
     pt_disp->CloseFilters();
     pt_disp->OpenFilters();
+}
+
+void MainWindow:: on_pushButtonSave_clicked()
+{
+    ui->pushButtonSave->clearFocus();
+    if (g_prod.saveCSVFile() == false)
+    {
+        ui->lineEditTrace->setText("FILE NON SALVATO");
+    }
+    else
+    {
+         ui->lineEditTrace->setText("NUOVO FILE CORRETTAMENTE SALVATO");
+    }
 }
 
 MainWindow::~MainWindow()
@@ -272,7 +282,7 @@ void MainWindow::txRun()
 {
     auto tStep = std::chrono::milliseconds(5);
     std::chrono::high_resolution_clock::time_point timePoint = std::chrono::high_resolution_clock::now() + tStep;
-    qDebug() << "task entrato";
+    // qDebug() << "task entrato";
 
     while(taskIsRunning)
     {

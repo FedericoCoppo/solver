@@ -15,6 +15,10 @@
         <file>images/cancel.png</file>
     </qresource>
 	
+	<qresource prefix="/icon">
+        <file>images/save.png</file>
+    </qresource>
+	
 </RCC>
 
 
