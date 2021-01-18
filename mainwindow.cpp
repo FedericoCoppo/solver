@@ -56,6 +56,8 @@ MainWindow::MainWindow(QWidget *parent)
       ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->tabWidget->setTabText(0, "Visualizzatore");
+    ui->tabWidget->setTabText(1, "Calcolatore Prezzi");
 
     QSize availableSize = qApp->desktop()->availableGeometry().size();
     QSize newSize( availableSize.width()*0.995, availableSize.height()*0.953 );
@@ -113,7 +115,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     taskIsRunning = true;
     txThread.start();
-
 }
 
 void MainWindow::on_actionLOAD_triggered()
@@ -146,6 +147,10 @@ void MainWindow::on_actionLOAD_triggered()
             pt_disp->CloseFilters();
             pt_disp->OpenFilters();
             ui->lineEditTrace->setText("FILE CORRETTAMENTE IMPORTATO");
+
+            ui->pushButtonCalculate->setEnabled(true);
+            modelFileName = fileNames[0];
+            displayLcdCoeff();
         }
         else
         {
@@ -153,6 +158,8 @@ void MainWindow::on_actionLOAD_triggered()
             ui->pushButtonAdd->setEnabled(false);
             ui->lineEditTrace->setText("FILE NON TROVATO O FORMATO INCORRETTO");
             pt_disp->ClearParamDisplayElement();
+
+            ui->pushButtonCalculate->setEnabled(false);
         }
 
         // update history
@@ -204,23 +211,23 @@ void MainWindow::openRecentFile(QAction* file)
          pt_disp->CloseFilters();
          pt_disp->OpenFilters();
          ui->lineEditTrace->setText("FILE " + file->text()  + " CORRETTAMENTE IMPORTATO");
+
+         ui->pushButtonCalculate->setEnabled(true);
+         modelFileName = file->text();
+         displayLcdCoeff();
      }
      else
      {
          ui->pushButtonDisplay->setEnabled(false);
          ui->pushButtonAdd->setEnabled(false);
          ui->lineEditTrace->setText("FILE NON TROVATO O FORMATO INCORRETTO");
+
+         ui->pushButtonCalculate->setEnabled(false);
      }
 }
 
 void MainWindow::on_actionExit_triggered()
 {
-    /* DA SPOSTARE NELLA PARTE CHE RICHIAMA IL MODELLO
-    QString program("multilinearRegProdotti.exe");
-    QStringList parameters;
-
-    QProcess::startDetached(program, parameters);
-    */
     this->close();
 }
 
@@ -278,6 +285,15 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::displayLcdCoeff()
+{
+    ui->doubleSpinBoxAA->setValue(g_prod.GetCoefficient(0));
+    ui->doubleSpinBoxBB->setValue(g_prod.GetCoefficient(1));
+    ui->doubleSpinBoxCC->setValue(g_prod.GetCoefficient(2));
+    ui->doubleSpinBoxDD->setValue(g_prod.GetCoefficient(3));
+    ui->doubleSpinBoxEE->setValue(g_prod.GetCoefficient(4));
+}
+
 void MainWindow::txRun()
 {
     auto tStep = std::chrono::milliseconds(5);
@@ -313,4 +329,115 @@ void MainWindow::txRun()
         timePoint += tStep;
     }
 }
+
+void MainWindow::on_pushButtonCalculate_clicked()
+{
+    ui->textBrowser->setText("ATTENDERE IL CALCOLO DEL MODELLO");
+    QString program = "C:/Federico/pers/solverTool/multilinearRegProdotti.exe";
+    QStringList arguments;
+    arguments << modelFileName << "fixed" << "0.5";
+    QProcess *myProcess = new QProcess();
+    myProcess->start(program, arguments);
+
+    // Continue reading the data until EOF reached
+    QString data;
+    while(myProcess->waitForReadyRead())
+        data.append(myProcess->readAll());
+
+    QStringList list;
+    list = data.split('\n');
+
+    //QString out_string(data);
+    // Output the data
+    ui->textBrowser->setText(data);
+    ui->lineEditTrace->setText("MODELLO PRODOTTI CALCOLATO CORRETTAMENTE");
+
+    // Search the coefficient
+    int idx_a = list.indexOf("coeff_a:\r");
+    QString coeffAStr = list[idx_a + 1];
+    float a = coeffAStr.remove(coeffAStr.size() -1, 1).toFloat();
+
+    int idx_b = list.indexOf("coeff_b:\r");
+    QString coeffBStr = list[idx_b + 1];
+    float b = coeffBStr.remove(coeffBStr.size() -1, 1).toFloat();
+
+    int idx_c = list.indexOf("coeff_c:\r");
+    QString coeffCStr = list[idx_c + 1];
+    float c = coeffCStr.remove(coeffCStr.size() -1, 1).toFloat();
+
+    int idx_d = list.indexOf("coeff_d:\r");
+    QString coeffDStr = list[idx_d + 1];
+    float d = coeffDStr.remove(coeffDStr.size() -1, 1).toFloat();
+
+    int idx_e = list.indexOf("coeff_e:\r");
+    QString coeffEStr = list[idx_e + 1];
+    float e = coeffEStr.remove(coeffEStr.size() -1, 1).toFloat();
+
+    // keep only 6 digit
+    a = ((float) qRound(a*1000000))/ (float) 1000000;
+    b = ((float) qRound(b*1000000))/ (float) 1000000;
+    c = ((float) qRound(c*1000000))/ (float) 1000000;
+    d = ((float) qRound(d*1000000))/ (float) 1000000;
+    e = ((float) qRound(e*1000000))/ (float) 1000000;
+
+    ui->doubleSpinBoxA->setValue(a);
+    ui->doubleSpinBoxB->setValue(b);
+    ui->doubleSpinBoxC->setValue(c);
+    ui->doubleSpinBoxD->setValue(d);
+    ui->doubleSpinBoxE->setValue(e);
+
+    ui->pushButtonSaveCoeff->setEnabled(true);
+}
+
+void MainWindow::on_pushButtonSaveCoeff_clicked()
+{
+    ui->pushButtonSaveCoeff->setEnabled(false);
+
+    QFile file(modelFileName);
+    if (!file.open(QIODevice::ReadOnly)) {
+        qDebug() << file.errorString();
+    }
+
+    QFile ofile(modelFileName + "Tmp.csv");
+    if (!ofile.open(QIODevice::ReadWrite)) {
+        qDebug() << file.errorString();
+    }
+
+    uint32_t cnt = 0;
+    bool coefficientCopyDone = false;
+    QString s = ui->doubleSpinBoxA->text() + ";" + ui->doubleSpinBoxB->text() + ";" + ui->doubleSpinBoxC->text()
+            + ";"  + ui->doubleSpinBoxD->text() + ";"  +  ui->doubleSpinBoxE->text() + '\n';
+    QByteArray ba = s.toLocal8Bit();
+    const char *c_s = ba.data();
+
+    while (!file.atEnd())
+    {
+        if(cnt != 1)
+        {
+            ofile.write( file.readLine() );
+        }
+        else
+        {
+            file.readLine();
+            ofile.write(c_s);
+            coefficientCopyDone = true;
+            cnt++;
+        }
+
+        if (!coefficientCopyDone)
+        {
+            cnt++;
+        }
+    }
+
+    ofile.close();
+    file.close();
+    file.remove();
+    ofile.rename(modelFileName);
+
+    g_prod.UpdateCoeff(ui->doubleSpinBoxA->value(), ui->doubleSpinBoxB->value(), ui->doubleSpinBoxC->value(), ui->doubleSpinBoxC->value(), ui->doubleSpinBoxA->value());
+}
+
+
+
 

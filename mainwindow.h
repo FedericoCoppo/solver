@@ -37,6 +37,11 @@ private:
     Ui::MainWindow *ui;
     myThreadTx txThread;
     ProductDisplayer * pt_disp;
+    QString modelFileName;
+
+    std::string extractString( std::string source, std::string start, std::string end );
+    void searchCoeffFile();
+    void displayLcdCoeff();
 
 private slots:
     void on_actionLOAD_triggered();
@@ -44,6 +49,8 @@ private slots:
     void on_pushButtonDisplay_clicked();
     void on_pushButtonAdd_clicked();
     void on_pushButtonSave_clicked();
+    void on_pushButtonCalculate_clicked();
+    void on_pushButtonSaveCoeff_clicked();
     void openRecentFile(QAction*);
 
 signals:

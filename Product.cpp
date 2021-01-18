@@ -76,8 +76,15 @@ bool Product::ProductParseFromExcel(QString path)
         return false;
     }
 
-    QList<QByteArray> wordList;
+    QList<QByteArray> wordList, coeffList;
     QByteArray line = file.readLine(); // remove header
+    line = file.readLine(); // read the coefficient
+    coeffList.append(line.split(';'));
+    coeff[0] = coeffList[0].replace(",", ".").toFloat();
+    coeff[1] = coeffList[1].replace(",", ".").toFloat();
+    coeff[2] = coeffList[2].replace(",", ".").toFloat();
+    coeff[3] = coeffList[3].replace(",", ".").toFloat();
+    coeff[4] = coeffList[4].replace(",", ".").toFloat();
 
     ClearProdCodeStrList();
     ClearProdCompanyStrList();
@@ -106,6 +113,8 @@ bool Product::ProductParseFromExcel(QString path)
         AppendProdCodeStrList(tmp_pt->code);
         AppendProdCompanyStrList(tmp_pt->company + " code: " + tmp_pt->code);
     }
+
+    file.close();
 
     res = true;
 
@@ -159,6 +168,15 @@ bool Product::saveCSVFile()
     }
 
     return true;
+}
+
+void Product::UpdateCoeff(float a, float b, float c, float d, float e)
+{
+    coeff[0] = a;
+    coeff[1] = b;
+    coeff[2] = c;
+    coeff[3] = d;
+    coeff[4] = e;
 }
 
 #endif // CONFIGURATOR_CPP

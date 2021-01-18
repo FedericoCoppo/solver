@@ -79,6 +79,8 @@ public:
     void SetLastValue(int index, double v) {  prodList[index]->lastPrice = v; }
     void SetIsProdListA2LNotEmpty(bool status) {isProductNotEmpty = status;}
     void ClearCalibStruct();
+    void UpdateCoeff(float a, float b, float c, float d, float e);
+    float GetCoefficient(int idx) { return coeff[idx]; }
 
 private:
     QString filePath;
@@ -87,6 +89,7 @@ private:
     QList < prodContent * > prodList;
     QStringList prodCodeStrList;
     QStringList prodCompanyStrList;
+    float coeff[5];
 
     bool getValueXCP(int i, double &data);
     bool valueChangeXCP(int i);

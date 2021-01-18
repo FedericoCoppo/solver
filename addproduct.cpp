@@ -51,7 +51,7 @@ void addProduct::on_pushButtonSaveAdd_clicked()
 
             this->close();
 
-            p_disp->Get_p_ui()->lineEditTrace->setText("NUOVO PRODOTTO codice" + tmp_pt->code + " ( " + tmp_pt->company  + " ) AGGIUNTO");
+            p_disp->Get_p_ui()->lineEditTrace->setText("NUOVO PRODOTTO codice:" + tmp_pt->code + " ( " + tmp_pt->company  + " ) AGGIUNTO");
         }
         else
         {

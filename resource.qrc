@@ -19,6 +19,14 @@
         <file>images/save.png</file>
     </qresource>
 	
+	<qresource prefix="/icon">
+        <file>images/calculate.png</file>
+    </qresource>
+	
+	<qresource prefix="/icon">
+        <file>images/search.png</file>
+    </qresource>
+	
 </RCC>
 
 

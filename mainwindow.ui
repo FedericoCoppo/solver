@@ -34,10 +34,13 @@
       </property>
       <item row="0" column="0" colspan="2">
        <widget class="QTabWidget" name="tabWidget">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="currentIndex">
          <number>0</number>
         </property>
-        <widget class="QWidget" name="tab_3">
+        <widget class="QWidget" name="viewerTab">
          <attribute name="title">
           <string>Tab 1</string>
          </attribute>
@@ -72,7 +75,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="resource.qrc">
+           <iconset resource="../../repo/toolAutolink/monetGUI/resource.qrc">
             <normaloff>:/icon/images/play.png</normaloff>
             <normalon>:/icon/images/stop.png</normalon>:/icon/images/play.png</iconset>
           </property>
@@ -212,7 +215,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="resource.qrc">
+           <iconset>
             <normaloff>:/icon/images/add.png</normaloff>:/icon/images/add.png</iconset>
           </property>
           <property name="iconSize">
@@ -235,7 +238,7 @@
          <widget class="QLabel" name="label">
           <property name="geometry">
            <rect>
-            <x>510</x>
+            <x>500</x>
             <y>40</y>
             <width>47</width>
             <height>13</height>
@@ -276,7 +279,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="resource.qrc">
+           <iconset>
             <normaloff>:/icon/images/save.png</normaloff>:/icon/images/save.png</iconset>
           </property>
           <property name="iconSize">
@@ -286,11 +289,335 @@
            </size>
           </property>
          </widget>
+         <widget class="QLabel" name="label_3">
+          <property name="geometry">
+           <rect>
+            <x>500</x>
+            <y>3</y>
+            <width>61</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Coeff</string>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBoxAA">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>570</x>
+            <y>0</y>
+            <width>61</width>
+            <height>22</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBoxBB">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>630</x>
+            <y>0</y>
+            <width>61</width>
+            <height>22</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBoxCC">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>690</x>
+            <y>0</y>
+            <width>61</width>
+            <height>22</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBoxDD">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>750</x>
+            <y>0</y>
+            <width>61</width>
+            <height>22</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBoxEE">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>810</x>
+            <y>0</y>
+            <width>61</width>
+            <height>22</height>
+           </rect>
+          </property>
+         </widget>
         </widget>
-        <widget class="QWidget" name="tab_4">
+        <widget class="QWidget" name="calcTab">
          <attribute name="title">
           <string>Tab 2</string>
          </attribute>
+         <widget class="QPushButton" name="pushButtonCalculate">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>10</y>
+            <width>35</width>
+            <height>35</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>35</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>35</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Start Session</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>:/icon/images/calculate.png</normaloff>:/icon/images/calculate.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>35</width>
+            <height>27</height>
+           </size>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEditTrace_2">
+          <property name="geometry">
+           <rect>
+            <x>390</x>
+            <y>30</y>
+            <width>571</width>
+            <height>20</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_2">
+          <property name="geometry">
+           <rect>
+            <x>390</x>
+            <y>10</y>
+            <width>47</width>
+            <height>13</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Info</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_4">
+          <property name="geometry">
+           <rect>
+            <x>80</x>
+            <y>20</y>
+            <width>101</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Calcola Modello</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_5">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>60</y>
+            <width>91</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Output</string>
+          </property>
+         </widget>
+         <widget class="QTextBrowser" name="textBrowser">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>90</y>
+            <width>351</width>
+            <height>431</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBoxA">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>420</x>
+            <y>100</y>
+            <width>141</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBoxB">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>420</x>
+            <y>130</y>
+            <width>141</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBoxC">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>420</x>
+            <y>160</y>
+            <width>141</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBoxD">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>420</x>
+            <y>190</y>
+            <width>141</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QDoubleSpinBox" name="doubleSpinBoxE">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>420</x>
+            <y>220</y>
+            <width>141</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_6">
+          <property name="geometry">
+           <rect>
+            <x>390</x>
+            <y>100</y>
+            <width>21</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>A</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_7">
+          <property name="geometry">
+           <rect>
+            <x>390</x>
+            <y>130</y>
+            <width>21</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>B</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_8">
+          <property name="geometry">
+           <rect>
+            <x>390</x>
+            <y>160</y>
+            <width>21</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>C</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_9">
+          <property name="geometry">
+           <rect>
+            <x>390</x>
+            <y>190</y>
+            <width>21</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>D</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_10">
+          <property name="geometry">
+           <rect>
+            <x>390</x>
+            <y>220</y>
+            <width>21</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>E</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pushButtonSaveCoeff">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>420</x>
+            <y>250</y>
+            <width>141</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>SALVA COEFFICENTI</string>
+          </property>
+         </widget>
         </widget>
        </widget>
       </item>
@@ -321,15 +648,7 @@
     <addaction name="menuRecent_Files"/>
     <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menuSession">
-    <property name="title">
-     <string>Session</string>
-    </property>
-    <addaction name="actionConnect"/>
-    <addaction name="actionStart_Session"/>
-   </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuSession"/>
   </widget>
   <action name="actionLOAD">
    <property name="text">
@@ -353,9 +672,7 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
  <slots>
   <slot>TestButtonPressed()</slot>
