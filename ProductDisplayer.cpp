@@ -250,20 +250,20 @@ void ProductDisplayer::displayTitle()
         titleLabelList.append(title_label);
 
         title_label  = new QLabel("PREZZO");
-        title_label->setMinimumWidth (110);
-        title_label->setMaximumWidth (120);
+        title_label->setMinimumWidth (95);
+        title_label->setMaximumWidth (100);
         hbox_layout->addWidget (title_label);
         titleLabelList.append(title_label);
 
         title_label  = new QLabel("MODIFICA");
-        title_label->setMinimumWidth (110);
-        title_label->setMaximumWidth (120);
+        title_label->setMinimumWidth (95);
+        title_label->setMaximumWidth (100);
         hbox_layout->addWidget (title_label);
         titleLabelList.append(title_label);
 
         title_label  = new QLabel("CANCELLA");
-        title_label->setMinimumWidth (110);
-        title_label->setMaximumWidth (120);
+        title_label->setMinimumWidth (95);
+        title_label->setMaximumWidth (100);
         hbox_layout->addWidget (title_label);
         titleLabelList.append(title_label);
 
