@@ -1,9 +1,15 @@
+
+#include <QLineSeries>
+
 #include "ProductDisplayer.h"
 #include <QtCore/qmath.h>
 #include <QMessageBox>
 #include <QTextStream>
 #include <QScrollBar>
 #include <QDebug>
+
+#include <QChart>
+
 
 ProductDisplayer::ProductDisplayer(Ui::MainWindow * pt_ui, QWidget* parent) : QWidget(parent)
 {
@@ -423,7 +429,25 @@ void ProductDisplayer::creatMeas(int index, int incrementalElement)
 
     prodDisplList.append(displayTmp);
 
+    // callback link
+    //displayTmp->price_pt->setMouseTracking(true);
+    //displayTmp->price_pt->installEventFilter(this);
 
+    float priceMdl = g_prod.GetWeight(index)*g_prod.GetCoefficient(0) + g_prod.GetSurface_mm2(index)*g_prod.GetCoefficient(1) + g_prod.GetTimePreparation(index)*g_prod.GetCoefficient(2)
+            + g_prod.GetTimePackage(index)*g_prod.GetCoefficient(3) + g_prod.GetPctReturn(index)*g_prod.GetCoefficient(4);
+    QString priceStr = "PREZZO CALCOLATO " + QString::number(priceMdl) + " €";
+    doubleSpinBoxEntry->setToolTip(priceStr);
+
+}
+
+bool ProductDisplayer::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::MouseMove)
+    {
+
+    }
+
+    return false;
 }
 
 void ProductDisplayer::DisplayProd()
@@ -714,6 +738,12 @@ void ProductDisplayer::handleButton(int idx)
                 // remove old and update
                 this->CloseFilters();
                 this->OpenFilters();
+
+                // update suggested price displayer
+                float priceMdl = g_prod.GetWeight(i)*g_prod.GetCoefficient(0) + g_prod.GetSurface_mm2(i)*g_prod.GetCoefficient(1) + g_prod.GetTimePreparation(i)*g_prod.GetCoefficient(2)
+                        + g_prod.GetTimePackage(i)*g_prod.GetCoefficient(3) + g_prod.GetPctReturn(i)*g_prod.GetCoefficient(4);
+                QString priceStr = "PREZZO CALCOLATO " + QString::number(priceMdl) + " €";
+                displayTmp->price_pt->setToolTip(priceStr);
 
             }
         }

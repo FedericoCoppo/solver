@@ -146,16 +146,20 @@ bool Product::saveCSVFile()
             int max =  g_prod.GetProdListCnt();
             QTextStream stream( &file );
             stream <<  "CODICE;DITTA;PESO[g];SUPERFICE [mm^2];PREPARAZIONE ALLA VERNICIATURA [min];TEMPO IMBALLAGGIO [min];% RICHIAMI;PREZZO" << Qt::endl;
-
+            stream << QString::number(g_prod.GetCoefficient(0)).replace(".", ",") + ";" + QString::number(g_prod.GetCoefficient(1)).replace(".", ",") + ";" +
+                      QString::number(g_prod.GetCoefficient(2)).replace(".", ",") + ";" + QString::number(g_prod.GetCoefficient(3)).replace(".", ",") + ";" +
+                      QString::number(g_prod.GetCoefficient(4)).replace(".", ",") << Qt::endl;
 
             for (int i = 0; i < max; i++ )
             {
-                QString line = g_prod.GetCode(i) + ";" + g_prod.GetCompany(i) + ";" + QString::number(g_prod.GetWeight(i)) + ";" + QString::number(g_prod.GetSurface_mm2(i)) +
-                        ";" + QString::number(g_prod.GetTimePreparation(i)) + ";" + QString::number(g_prod.GetTimePackage(i)) + ";"+ QString::number(g_prod.GetPctReturn(i)) + ";" + QString::number(g_prod.GetNominalPrice(i));
+                QString line = g_prod.GetCode(i) + ";" + g_prod.GetCompany(i) + ";" + QString::number(g_prod.GetWeight(i)).replace(".", ",") + ";" + QString::number(g_prod.GetSurface_mm2(i)).replace(".", ",") +
+                        ";" + QString::number(g_prod.GetTimePreparation(i)).replace(".", ",") + ";" + QString::number(g_prod.GetTimePackage(i)).replace(".", ",") + ";"+ QString::number(g_prod.GetPctReturn(i)).replace(".", ",")
+                        + ";" + QString::number(g_prod.GetNominalPrice(i)).replace(".", ",");
 
                 if (i + 1 == max)
                 {
                     /* avoid '\n' at the endo of the file */
+                    stream << line;
                 }
                 else
                 {
@@ -177,6 +181,8 @@ void Product::UpdateCoeff(float a, float b, float c, float d, float e)
     coeff[2] = c;
     coeff[3] = d;
     coeff[4] = e;
+
+
 }
 
 #endif // CONFIGURATOR_CPP

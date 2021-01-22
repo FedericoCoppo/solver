@@ -96,6 +96,7 @@ private:
     void clearTitle();
     void creatMeas(int index, int incrementalElement);
     void displayTitle();
+    bool eventFilter(QObject *obj, QEvent *event);
 
     /*
     void U64slotInputChanged(uint64_t newVal, U64QSpinBox * pt);

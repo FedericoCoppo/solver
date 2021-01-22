@@ -435,7 +435,18 @@ void MainWindow::on_pushButtonSaveCoeff_clicked()
     file.remove();
     ofile.rename(modelFileName);
 
-    g_prod.UpdateCoeff(ui->doubleSpinBoxA->value(), ui->doubleSpinBoxB->value(), ui->doubleSpinBoxC->value(), ui->doubleSpinBoxC->value(), ui->doubleSpinBoxA->value());
+    g_prod.UpdateCoeff(ui->doubleSpinBoxA->value(), ui->doubleSpinBoxB->value(), ui->doubleSpinBoxC->value(), ui->doubleSpinBoxD->value(), ui->doubleSpinBoxE->value());
+    ui->doubleSpinBoxAA->setValue(g_prod.GetCoefficient(0));
+    ui->doubleSpinBoxBB->setValue(g_prod.GetCoefficient(1));
+    ui->doubleSpinBoxCC->setValue(g_prod.GetCoefficient(2));
+    ui->doubleSpinBoxDD->setValue(g_prod.GetCoefficient(3));
+    ui->doubleSpinBoxEE->setValue(g_prod.GetCoefficient(4));
+
+    if (pt_disp->isDisplayOn())
+    {
+        pt_disp->PushButtonDisplayClicked();
+        pt_disp->PushButtonDisplayClicked();
+    }
 }
 
 
