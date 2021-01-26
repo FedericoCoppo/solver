@@ -92,7 +92,6 @@ private:
     TextFilter * textEditFilterCode;
     bool buttonConnected;
 
-    void DoubleSlotInputChanged(double newVal, DOUBLEQSpinBox * pt);
     void clearTitle();
     void creatMeas(int index, int incrementalElement);
     void displayTitle();

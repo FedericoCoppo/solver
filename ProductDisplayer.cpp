@@ -320,7 +320,6 @@ void ProductDisplayer::creatMeas(int index, int incrementalElement)
     doubleSpinBoxEntry->setRange(0, std::numeric_limits<float>::max());  // - 3.4 * pow(10, 38) 3.4 * pow(10, 38)
     displayTmp->weight_pt = doubleSpinBoxEntry;
     doubleSpinBoxEntry->blockSignals(false);
-    connect(doubleSpinBoxEntry, QOverload<double, DOUBLEQSpinBox * >::of(&DOUBLEQSpinBox::valueChanged) , this, &ProductDisplayer::DoubleSlotInputChanged);
     displayTmp->weight_pt->setEnabled(false);
 
     /* surface */
@@ -334,7 +333,6 @@ void ProductDisplayer::creatMeas(int index, int incrementalElement)
     doubleSpinBoxEntry->setRange(0, std::numeric_limits<float>::max());  // - 3.4 * pow(10, 38) 3.4 * pow(10, 38)
     displayTmp->surface_pt = doubleSpinBoxEntry;
     doubleSpinBoxEntry->blockSignals(false);
-    connect(doubleSpinBoxEntry, QOverload<double, DOUBLEQSpinBox * >::of(&DOUBLEQSpinBox::valueChanged) , this, &ProductDisplayer::DoubleSlotInputChanged);
     displayTmp->surface_pt->setEnabled(false);
 
     /* preparation */
@@ -348,7 +346,6 @@ void ProductDisplayer::creatMeas(int index, int incrementalElement)
     doubleSpinBoxEntry->setRange(0, std::numeric_limits<float>::max());  // - 3.4 * pow(10, 38) 3.4 * pow(10, 38)
     displayTmp->preparation_pt = doubleSpinBoxEntry;
     doubleSpinBoxEntry->blockSignals(false);
-    connect(doubleSpinBoxEntry, QOverload<double, DOUBLEQSpinBox * >::of(&DOUBLEQSpinBox::valueChanged) , this, &ProductDisplayer::DoubleSlotInputChanged);
     displayTmp->preparation_pt->setEnabled(false);
 
     /* package */
@@ -362,7 +359,6 @@ void ProductDisplayer::creatMeas(int index, int incrementalElement)
     doubleSpinBoxEntry->setRange(0, std::numeric_limits<float>::max());  // - 3.4 * pow(10, 38) 3.4 * pow(10, 38)
     displayTmp->package_time_pt = doubleSpinBoxEntry;
     doubleSpinBoxEntry->blockSignals(false);
-    connect(doubleSpinBoxEntry, QOverload<double, DOUBLEQSpinBox * >::of(&DOUBLEQSpinBox::valueChanged) , this, &ProductDisplayer::DoubleSlotInputChanged);
     displayTmp->package_time_pt->setEnabled(false);
 
     /* return */
@@ -376,7 +372,6 @@ void ProductDisplayer::creatMeas(int index, int incrementalElement)
     doubleSpinBoxEntry->setRange(0, std::numeric_limits<float>::max());  // - 3.4 * pow(10, 38) 3.4 * pow(10, 38)
     displayTmp->pctReturn_pt = doubleSpinBoxEntry;
     doubleSpinBoxEntry->blockSignals(false);
-    connect(doubleSpinBoxEntry, QOverload<double, DOUBLEQSpinBox * >::of(&DOUBLEQSpinBox::valueChanged) , this, &ProductDisplayer::DoubleSlotInputChanged);
     displayTmp->pctReturn_pt->setEnabled(false);
 
     /* price */
@@ -390,7 +385,6 @@ void ProductDisplayer::creatMeas(int index, int incrementalElement)
     doubleSpinBoxEntry->setRange(0, std::numeric_limits<float>::max());  // - 3.4 * pow(10, 38) 3.4 * pow(10, 38)
     displayTmp->price_pt = doubleSpinBoxEntry;
     doubleSpinBoxEntry->blockSignals(false);
-    connect(doubleSpinBoxEntry, QOverload<double, DOUBLEQSpinBox * >::of(&DOUBLEQSpinBox::valueChanged) , this, &ProductDisplayer::DoubleSlotInputChanged);
     displayTmp->price_pt->setEnabled(false);
 
     /* button */
@@ -753,35 +747,4 @@ void ProductDisplayer::handleButton(int idx)
             displayTmp->button_pt->setStyleSheet("background-color: red");
         }
     }
-}
-
-void ProductDisplayer::DoubleSlotInputChanged(double newVal, DOUBLEQSpinBox * pt)
-{
-    /*
-    uint32_t idx = pt->getCalLink()->index;
-    ui.traceTxt->append("Cal " + QString::number(idx) + " updated at " + QString::number(newVal));
-    if (newVal == pt->getCalLink()->lastVal)
-    {
-        calDisplList[idx]->isValueUpdatedOnCal = true;
-        calDisplList[idx]->button_pt->setEnabled(false);
-        if (newVal == pt->getCalLink()->initVal)
-        {
-            calDisplList[idx]->button_pt->setStyleSheet("background-color: light grey");
-            calDisplList[idx]->button_pt->setText(QCoreApplication::translate("CalibrationUi", "CHANGE", nullptr));
-        }
-        else
-        {
-            calDisplList[idx]->button_pt->setStyleSheet("background-color: yellow");
-            calDisplList[idx]->button_pt->setText(QCoreApplication::translate("CalibrationUi", "CHANGED", nullptr));
-        }
-    }
-    else
-    {
-        // Allow to change
-        calDisplList[idx]->button_pt->setEnabled(true);
-        calDisplList[idx]->button_pt->setStyleSheet("background-color: red");
-        calDisplList[idx]->button_pt->setText(QCoreApplication::translate("CalibrationUi", "CHANGE?", nullptr));
-        calDisplList[idx]->isValueUpdatedOnCal = false;
-    }
-    */
 }
