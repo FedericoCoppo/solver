@@ -6,6 +6,10 @@ from sklearn import preprocessing
 
 import sys
 
+import os
+if os.path.exists("Coefficent.txt"):
+  os.remove("Coefficent.txt")
+  
 fileName = "Prodotti.csv"
 testMode = "random"
 testPct =  0.8;
@@ -97,9 +101,9 @@ print('Variance score (near 0.99 is good): %.2f' % multi_regr.score(x, y)) # 1 i
 	
 
  
-#file = open("Coefficent.txt", "w") 
-#file.write(str(multi_regr.coef_)) 
-#file.close()
+file = open("Coefficent.txt", "w") 
+file.write(str(multi_regr.coef_)) 
+file.close()
 
 
 coeff_a = multi_regr.coef_[0][0]

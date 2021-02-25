@@ -151,6 +151,7 @@ void MainWindow::on_actionLOAD_triggered()
             ui->pushButtonCalculate->setEnabled(true);
             modelFileName = fileNames[0];
             displayLcdCoeff();
+            ui->label_4->setText("calcola modello su file: " + modelFileName);
         }
         else
         {
@@ -215,6 +216,7 @@ void MainWindow::openRecentFile(QAction* file)
          ui->pushButtonCalculate->setEnabled(true);
          modelFileName = file->text();
          displayLcdCoeff();
+         ui->label_4->setText("calcola modello su file: " + modelFileName);
      }
      else
      {
@@ -336,16 +338,48 @@ void MainWindow::on_pushButtonCalculate_clicked()
     QString program = "C:/Federico/pers/solverTool/multilinearRegProdotti.exe";
     QStringList arguments;
     arguments << modelFileName << "fixed" << "0.5";
-    QProcess *myProcess = new QProcess();
-    myProcess->start(program, arguments);
 
-    // Continue reading the data until EOF reached
-    QString data;
-    while(myProcess->waitForReadyRead())
-        data.append(myProcess->readAll());
+    //QProcess *myProcess = new QProcess();
+    //myProcess->start(program, arguments);
+    //myProcess->kill();
+    //myProcess->waitForFinished();
+    //delete myProcess;
+    QProcess process;
+    process.startDetached(program, arguments);
 
+    // wait
+    QThread::sleep(20);
+
+
+    // READ FILE
+    QString line;
+    QFile inputFile("Coefficent.txt");
+    if (inputFile.open(QIODevice::ReadOnly))
+    {
+       QTextStream in(&inputFile);
+       while (!in.atEnd())
+       {
+         line += in.readLine();
+       }
+       inputFile.close();
+    }
+
+    line.remove("[");
+    line.remove("]");
+    QString data = line;
     QStringList list;
-    list = data.split('\n');
+    list = data.split(' ');
+
+    for (int i = 0; i < list.size(); i++)
+    {
+        if(list.at(i) == "")
+        {
+            list.removeAt(i);
+        }
+    }
+
+
+
 
     //QString out_string(data);
     // Output the data
@@ -373,6 +407,14 @@ void MainWindow::on_pushButtonCalculate_clicked()
     QString coeffEStr = list[idx_e + 1];
     float e = coeffEStr.remove(coeffEStr.size() -1, 1).toFloat();
 
+
+    a = list.at(0).toFloat();
+    b = list.at(1).toFloat();
+    c = list.at(2).toFloat();
+    d = list.at(3).toFloat();
+    e = list.at(4).toFloat();
+
+
     // keep only 6 digit
     a = ((float) qRound(a*1000000))/ (float) 1000000;
     b = ((float) qRound(b*1000000))/ (float) 1000000;
@@ -393,6 +435,7 @@ void MainWindow::on_pushButtonSaveCoeff_clicked()
 {
     ui->pushButtonSaveCoeff->setEnabled(false);
 
+/*
     QFile file(modelFileName);
     if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << file.errorString();
@@ -434,7 +477,7 @@ void MainWindow::on_pushButtonSaveCoeff_clicked()
     file.close();
     file.remove();
     ofile.rename(modelFileName);
-
+*/
     g_prod.UpdateCoeff(ui->doubleSpinBoxA->value(), ui->doubleSpinBoxB->value(), ui->doubleSpinBoxC->value(), ui->doubleSpinBoxD->value(), ui->doubleSpinBoxE->value());
     ui->doubleSpinBoxAA->setValue(g_prod.GetCoefficient(0));
     ui->doubleSpinBoxBB->setValue(g_prod.GetCoefficient(1));

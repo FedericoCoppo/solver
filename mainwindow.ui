@@ -75,7 +75,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../../repo/toolAutolink/monetGUI/resource.qrc">
+           <iconset resource="resource.qrc">
             <normaloff>:/icon/images/play.png</normaloff>
             <normalon>:/icon/images/stop.png</normalon>:/icon/images/play.png</iconset>
           </property>
@@ -215,7 +215,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
+           <iconset resource="resource.qrc">
             <normaloff>:/icon/images/add.png</normaloff>:/icon/images/add.png</iconset>
           </property>
           <property name="iconSize">
@@ -279,7 +279,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
+           <iconset resource="resource.qrc">
             <normaloff>:/icon/images/save.png</normaloff>:/icon/images/save.png</iconset>
           </property>
           <property name="iconSize">
@@ -378,7 +378,7 @@
           </property>
           <property name="geometry">
            <rect>
-            <x>20</x>
+            <x>10</x>
             <y>10</y>
             <width>35</width>
             <height>35</height>
@@ -403,7 +403,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
+           <iconset resource="resource.qrc">
             <normaloff>:/icon/images/calculate.png</normaloff>:/icon/images/calculate.png</iconset>
           </property>
           <property name="iconSize">
@@ -439,21 +439,21 @@
          <widget class="QLabel" name="label_4">
           <property name="geometry">
            <rect>
-            <x>80</x>
+            <x>50</x>
             <y>20</y>
-            <width>101</width>
-            <height>16</height>
+            <width>331</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="text">
-           <string>Calcola Modello</string>
+           <string>Calcola Modello su file originale</string>
           </property>
          </widget>
          <widget class="QLabel" name="label_5">
           <property name="geometry">
            <rect>
-            <x>20</x>
-            <y>60</y>
+            <x>10</x>
+            <y>50</y>
             <width>91</width>
             <height>21</height>
            </rect>
@@ -465,8 +465,8 @@
          <widget class="QTextBrowser" name="textBrowser">
           <property name="geometry">
            <rect>
-            <x>20</x>
-            <y>90</y>
+            <x>10</x>
+            <y>80</y>
             <width>351</width>
             <height>431</height>
            </rect>
@@ -615,7 +615,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>SALVA COEFFICENTI</string>
+           <string>AGGIORNA COEFFICENTI</string>
           </property>
          </widget>
         </widget>
@@ -672,7 +672,9 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
  <slots>
   <slot>TestButtonPressed()</slot>
